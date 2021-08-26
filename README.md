@@ -33,10 +33,10 @@ No modules.
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace the release belongs to(not deployed to) | `string` | `"flux-system"` | no |
 | <a name="input_source_name"></a> [source\_name](#input\_source\_name) | HelmRepository or GitRepository source name | `string` | n/a | yes |
 | <a name="input_source_namespace"></a> [source\_namespace](#input\_source\_namespace) | Namespace of the source repository | `string` | `null` | no |
-| <a name="input_values"></a> [values](#input\_values) | Values to apply to the release | `map(any)` | `null` | no |
+| <a name="input_values"></a> [values](#input\_values) | Values to apply to the release | `any` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_release"></a> [release](#output\_release) | n/a |
+| <a name="output_manifest"></a> [manifest](#output\_manifest) | n/a |

@@ -22,12 +22,12 @@ locals {
     apiVersion = "helm.toolkit.fluxcd.io/v2beta1"
     kind       = "HelmRelease"
     metadata = {
-      name      = local.name
-      namespace = local.namespace
-      # finalizers = ["finalizers.fluxcd.io"]
+      name       = local.name
+      namespace  = local.namespace
+      finalizers = ["finalizers.fluxcd.io"]
     }
     spec = {
-      values   = tomap(local.values)
+      values   = local.values
       interval = local.interval
       chart = {
         spec = {
@@ -40,15 +40,9 @@ locals {
             name       = local.source_name
             namespace  = local.source_namespace
           }
-          valuesFile  = null
-          valuesFiles = []
         }
       }
       releaseName = local.name
     }
   }
-}
-
-output "release" {
-  value = local.release
 }
