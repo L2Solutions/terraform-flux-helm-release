@@ -19,7 +19,7 @@ variable "interval" {
 variable "values" {
   description = "Values to apply to the release"
   default     = null
-  type        = map(any)
+  type        = any
 }
 
 variable "chart" {
