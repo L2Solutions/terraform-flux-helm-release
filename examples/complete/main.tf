@@ -9,7 +9,7 @@ provider "kubernetes" {
 
 module "flux-install" {
   count   = 1
-  source  = "L2Solutions/install/flux"
+  source  = "OmniTeqSource/install/flux"
   version = ">= 0.0.27"
 }
 
@@ -22,7 +22,7 @@ locals {
 module "helm-repository" {
   count = local.install_complete ? 1 : 0
 
-  source  = "L2Solutions/helm-repository/flux"
+  source  = "OmniTeqSource/helm-repository/flux"
   version = "0.0.6"
 
   name = "helm-repository-bitnami"
@@ -47,11 +47,11 @@ module "helm-release-helm" {
 module "git-repository" {
   count = local.install_complete ? 1 : 0
 
-  source  = "L2Solutions/git-repository/flux"
+  source  = "OmniTeqSource/git-repository/flux"
   version = "0.0.4"
 
   name = "helm-release-test"
-  url  = "https://github.com/L2Solutions/helm-chart-example.git"
+  url  = "https://github.com/OmniTeqSource/helm-chart-example.git"
 
   # This will prevent a condition where the namespace cannot be removed if a CR for a CRD still exists.
   depends_on = [module.flux-install]
