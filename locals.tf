@@ -6,7 +6,8 @@ locals {
   values    = var.values
 
   source_ref = defaults(var.source_ref, {
-    kind = "HelmRepository"
+    kind      = "HelmRepository"
+    namespace = local.namespace
   })
 
   # TODO: Prefix modules
