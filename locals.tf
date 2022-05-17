@@ -1,24 +1,24 @@
 locals {
-  name             = var.name
-  namespace        = var.namespace
-  chart            = var.chart
-  version          = var.chart_version
-  source_name      = var.source_name
-  source_namespace = var.source_namespace == null ? var.namespace : var.source_namespace
-  values           = var.values
+  name      = var.random_suffix ? join("-", [var.name, random_string.this.id]) : var.name
+  namespace = var.namespace
+  chart     = var.chart
+  version   = var.chart_version
+  values    = var.values
+
+  source_ref = defaults(var.source_ref, {
+    kind = "HelmRepository"
+  })
 
   # TODO: Prefix modules
   helm_prefix = "helm-repository-"
 }
 
 locals {
-  interval = var.interval == null ? local.source_kind == "HelmRepository" ? "30m0s" : "5m0s" : var.interval
-
-  source_kind = substr(local.source_name, 0, length(local.helm_prefix)) == local.helm_prefix ? "HelmRepository" : "GitRepository"
+  interval = var.interval
 }
 
 locals {
-  release = {
+  manifest = {
     apiVersion = "helm.toolkit.fluxcd.io/v2beta1"
     kind       = "HelmRelease"
     metadata = {
@@ -31,15 +31,10 @@ locals {
       interval = local.interval
       chart = {
         spec = {
-          chart    = local.chart
-          version  = local.version
-          interval = local.interval
-          sourceRef = {
-            apiVersion = "source.toolkit.fluxcd.io/v1beta1"
-            kind       = local.source_kind
-            name       = local.source_name
-            namespace  = local.source_namespace
-          }
+          chart     = local.chart
+          version   = local.version
+          interval  = local.interval
+          sourceRef = local.source_ref
         }
       }
       releaseName = local.name

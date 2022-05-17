@@ -12,7 +12,7 @@ variable "namespace" {
 
 variable "interval" {
   description = "Interval to check the repo for reconciliation"
-  default     = null
+  default     = "5m0s"
   type        = string
 }
 
@@ -33,13 +33,22 @@ variable "chart_version" {
   type        = string
 }
 
-variable "source_name" {
-  description = "HelmRepository or GitRepository source name"
-  type        = string
+variable "source_ref" {
+  description = "Object containing source configuration"
+  type = object({
+    name      = string
+    namespace = optional(string)
+    kind      = optional(string)
+  })
+
+  validation {
+    condition     = var.source_ref.kind == null || contains(["HelmRelease", "GitRepository"], var.source_ref.kind == null ? "" : var.source_ref.kind)
+    error_message = "Allowed values for `source.name` are `[\"HelmRelease\", \"GitRepository\"]`(defaults to `HelmRelease`)."
+  }
 }
 
-variable "source_namespace" {
-  description = "Namespace of the source repository"
-  default     = null
-  type        = string
+variable "random_suffix" {
+  description = "Add a random alpha-numeric suffix to resource names(prevents helm release collision)"
+  default     = true
+  type        = bool
 }
