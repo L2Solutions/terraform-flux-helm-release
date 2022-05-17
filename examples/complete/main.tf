@@ -1,68 +1,63 @@
 provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = "k3d-tftest"
+}
 
-  experiments {
-    manifest_resource = true
+provider "helm" {
+  kubernetes {
+    config_path    = "~/.kube/config"
+    config_context = "k3d-tftest"
   }
 }
 
-module "flux-install" {
-  count   = 1
+module "flux_install" {
   source  = "OmniTeqSource/install/flux"
-  version = ">= 0.0.27"
+  version = "0.2.0"
 }
 
-# Set to true after flux-install. GitRepository CRD need to be created before the repo instances may be created.
-locals {
-  install_complete = false
-}
-
-
-module "helm-repository" {
-  count = local.install_complete ? 1 : 0
-
+module "helm_repository" {
   source  = "OmniTeqSource/helm-repository/flux"
-  version = "0.0.6"
+  version = "0.2.3"
 
   name = "helm-repository-bitnami"
   url  = "https://charts.bitnami.com/"
 
   # This will prevent a condition where the namespace cannot be removed if a CR for a CRD still exists.
-  depends_on = [module.flux-install]
+  depends_on = [module.flux_install]
 }
 
-module "helm-release-helm" {
-  count = local.install_complete ? 1 : 0
-
+module "helm_release_helm" {
   source = "../../"
 
-  name        = "redis"
-  chart       = "bitnami/redis"
-  source_name = "helm-repository-bitnami"
+  name  = "redis"
+  chart = "bitnami/redis"
 
-  depends_on = [module.helm-repository]
+  source_ref = {
+    name = module.helm_repository.name
+  }
+
+  depends_on = [module.helm_repository]
 }
 
-module "git-repository" {
-  count = local.install_complete ? 1 : 0
-
+module "git_repository" {
   source  = "OmniTeqSource/git-repository/flux"
-  version = "0.0.4"
+  version = "0.2.2"
 
   name = "helm-release-test"
   url  = "https://github.com/OmniTeqSource/helm-chart-example.git"
 
   # This will prevent a condition where the namespace cannot be removed if a CR for a CRD still exists.
-  depends_on = [module.flux-install]
+  depends_on = [module.flux_install]
 }
 
-module "helm-release-git" {
-  count = local.install_complete ? 1 : 0
-
+module "helm_release_git" {
   source = "../../"
 
-  name        = "helm-release-git"
-  chart       = "chart"
-  source_name = "helm-release-test"
+  name  = "helm-release-git"
+  chart = "chart"
+
+  source_ref = {
+    name = module.git_repository.name
+    kind = "GitRepository"
+  }
 }
