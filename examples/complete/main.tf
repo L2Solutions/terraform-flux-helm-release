@@ -11,13 +11,13 @@ provider "helm" {
 }
 
 module "flux_install" {
-  source  = "OmniTeqSource/install/flux"
-  version = "0.2.0"
+  source  = "skyfjell/install/flux"
+  version = "1.0.1"
 }
 
 module "helm_repository" {
-  source  = "OmniTeqSource/helm-repository/flux"
-  version = "0.2.3"
+  source  = "skyfjell/helm-repository/flux"
+  version = "1.0.1"
 
   name = "helm-repository-bitnami"
   url  = "https://charts.bitnami.com/"
@@ -40,11 +40,11 @@ module "helm_release_helm" {
 }
 
 module "git_repository" {
-  source  = "OmniTeqSource/git-repository/flux"
-  version = "0.2.2"
+  source  = "skyfjell/git-repository/flux"
+  version = "1.0.1"
 
   name = "helm-release-test"
-  url  = "https://github.com/OmniTeqSource/helm-chart-example.git"
+  url  = "https://github.com/skyfjell/helm-chart-example.git"
 
   # This will prevent a condition where the namespace cannot be removed if a CR for a CRD still exists.
   depends_on = [module.flux_install]

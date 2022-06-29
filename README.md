@@ -6,21 +6,21 @@ This module applies a `flux` `HelmRelease` custom resource using the Terraform `
 
 The following modules may be used as sources:
 
-[terraform-flux-helm-repository](https://registry.terraform.io/modules/Skyfjall/helm-repository/flux/latest)
+[terraform-flux-helm-repository](https://registry.terraform.io/modules/skyfjell/helm-repository/flux/latest)
 
-[terraform-flux-git-repository](https://registry.terraform.io/modules/Skyfjall/git-repository/flux/latest)
+[terraform-flux-git-repository](https://registry.terraform.io/modules/skyfjell/git-repository/flux/latest)
 
 ## Additional Flux Module Resources
 
 The below modules provide support for installation and individual configuration of `fluxcd` Custom Resources:
 
-[Flux Install Module - terraform-flux-install](https://registry.terraform.io/modules/Skyfjall/install/flux/latest)
+[Flux Install Module - terraform-flux-install](https://registry.terraform.io/modules/skyfjell/install/flux/latest)
 
-[Flux HelmRepository Module - terraform-flux-helm-repository](https://registry.terraform.io/modules/Skyfjall/helm-repository/flux/latest)
+[Flux HelmRepository Module - terraform-flux-helm-repository](https://registry.terraform.io/modules/skyfjell/helm-repository/flux/latest)
 
-[Flux GitRepository Module - terraform-flux-git-repository](https://registry.terraform.io/modules/Skyfjall/git-repository/flux/latest)
+[Flux GitRepository Module - terraform-flux-git-repository](https://registry.terraform.io/modules/skyfjell/git-repository/flux/latest)
 
-[Flux Kustomization Module - terraform-flux-kustomization](https://registry.terraform.io/modules/Skyfjall/kustomization/flux/latest)
+[Flux Kustomization Module - terraform-flux-kustomization](https://registry.terraform.io/modules/skyfjell/kustomization/flux/latest)
 
 <!-- BEGIN_TF_DOCS -->
 
