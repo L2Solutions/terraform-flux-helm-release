@@ -37,13 +37,13 @@ variable "source_ref" {
   description = "Object containing source configuration"
   type = object({
     name      = string
-    namespace = optional(string)
-    kind      = optional(string)
+    namespace = optional(string, "flux-system")
+    kind      = optional(string, "HelmRepository")
   })
 
   validation {
-    condition     = var.source_ref.kind == null || contains(["HelmRelease", "GitRepository"], var.source_ref.kind == null ? "" : var.source_ref.kind)
-    error_message = "Allowed values for `source.name` are `[\"HelmRelease\", \"GitRepository\"]`(defaults to `HelmRelease`)."
+    condition     = var.source_ref.kind == null || contains(["HelmRepository", "GitRepository"], var.source_ref.kind == null ? "" : var.source_ref.kind)
+    error_message = "Allowed values for `source.name` are `[\"HelmRepository\", \"GitRepository\"]`(defaults to `HelmRelease`)."
   }
 }
 

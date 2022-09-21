@@ -12,12 +12,12 @@ provider "helm" {
 
 module "flux_install" {
   source  = "skyfjell/install/flux"
-  version = "1.0.1"
+  version = "1.0.4"
 }
 
 module "helm_repository" {
   source  = "skyfjell/helm-repository/flux"
-  version = "1.0.1"
+  version = "1.0.2"
 
   name = "helm-repository-bitnami"
   url  = "https://charts.bitnami.com/"
@@ -41,7 +41,7 @@ module "helm_release_helm" {
 
 module "git_repository" {
   source  = "skyfjell/git-repository/flux"
-  version = "1.0.1"
+  version = "1.0.2"
 
   name = "helm-release-test"
   url  = "https://github.com/skyfjell/helm-chart-example.git"
