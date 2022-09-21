@@ -5,16 +5,11 @@ locals {
   version   = var.chart_version
   values    = var.values
 
-  source_ref = defaults(var.source_ref, {
-    kind      = "HelmRepository"
-    namespace = local.namespace
-  })
+  source_ref = var.source_ref
 
   # TODO: Prefix modules
   helm_prefix = "helm-repository-"
-}
 
-locals {
   interval = var.interval
 }
 
